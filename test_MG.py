@@ -28,7 +28,7 @@ version = '4.2'
 
 device = torch.device('cuda')
 net = SGNet(num_feats=n_feats, kernel_size=3, scale=scale, version = version).cuda()
-net.load_state_dict(torch.load("results/result_train_current/202503082257-MG-24-4.2/MG_BEST_0.318149_94.pth", map_location=device, weights_only = True))
+net.load_state_dict(torch.load("results/saved_models/BEST-MG-epoch94.pth", map_location=device, weights_only = True))
 
 # SETTINGS FOR NOISE
 noise = {'gaussian':{}, 'saltpepper':{}}
@@ -71,7 +71,7 @@ with torch.no_grad():
 
         rmse[idx] = calc_rmse_real(gt[0, 0], out[0, 0], max_value)
 
-        t.set_description('[validate] rmse: %f' % rmse[:idx + 1].mean())
+        t.set_description('[test] rmse: %f' % rmse[:idx + 1].mean())
         t.refresh()
 
     r_mean = rmse.mean()

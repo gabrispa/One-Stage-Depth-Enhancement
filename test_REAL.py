@@ -30,7 +30,7 @@ dataset_v = '1.2'
 
 device = torch.device('cuda')
 net = SGNet(num_feats=n_feats, kernel_size=3, scale=scale, version = version).cuda()
-net.load_state_dict(torch.load("results/result_train_current/20250270044-REAL-24-4.2/REAL_BEST_1.753700_61.pth", map_location=device, weights_only = True))
+net.load_state_dict(torch.load("results/saved_models/BEST-REAL-epoch173.pth", map_location=device, weights_only = True))
 
 # SETTINGS FOR NOISE --> FINAL TESTING SETTINGS FOR REAL DATASET = ALL FALSE 
 noise= {'gaussian':{}, 'saltpepper':{}, 'downup_lr':{}}
@@ -76,7 +76,7 @@ with torch.no_grad():
         out, out_grad, _ = net((guidance, lr))
         rmse[idx] = calc_rmse_real(gt[0, 0], out[0, 0], max_value)
         
-        t.set_description('[validate] rmse: %f' % rmse[:idx + 1].mean())
+        t.set_description('[test] rmse: %f' % rmse[:idx + 1].mean())
         t.refresh()
 
     r_mean = rmse.mean()
